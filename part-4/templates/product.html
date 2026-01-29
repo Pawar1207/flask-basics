@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Product Details</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f8;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 500px;
+            margin: 80px auto;
+            background: #ffffff;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .product-detail {
+            font-size: 18px;
+            margin: 15px 0;
+            color: #555;
+        }
+
+        .price {
+            font-size: 22px;
+            font-weight: bold;
+            color: #27ae60;
+        }
+
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Product Details</h1>
+
+    <p class="product-detail"><b>ID:</b> {{ product.id }}</p>
+    <p class="product-detail"><b>Name:</b> {{ product.name }}</p>
+    <p class="product-detail price"><b>Price:</b> ₹{{ product.price }}</p>
+
+    <button class="btn">Buy Now</button>
+</div>
+
+</body>
+</html>

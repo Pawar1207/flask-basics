@@ -1,13 +1,4 @@
-"""
-Part 4: Dynamic Routes - URL Parameters
-========================================
-How to Run:
-1. Make sure venv is activated
-2. Run: python app.py
-3. Try different URLs like /user/YourName or /post/123
-"""
-
-from flask import Flask, render_template, url_for
+from flask import Flask, render_template, request, redirect, url_for
 
 app = Flask(__name__)
 
@@ -55,39 +46,45 @@ def show_links():
     }
     return render_template('links.html', links=links)
 
+products = {
+        1: {'id': 1, 'name': 'Laptop', 'price': 70000},
+        2: {'id': 2, 'name': 'Mobile', 'price': 20000},
+        3: {'id': 3, 'name': 'Airbuds', 'price': 1000}
+    }
+
+@app.route('/product/<int:product_id>')
+def show_products(product_id):
+    product = products.get(product_id)
+    if product:
+        return render_template('product.html', product=product)
+    else:
+        return "<h1>Product Not Found</h1>", 404
+    
+@app.route('/category/<category_name>/product/<int:product_id>')
+def category_product(category_name, product_id):
+    product = products.get(product_id)
+    if product:
+        return render_template('category.html',category=category_name,product=product)
+    else:
+        return "<h2>Product Not Found</h2>", 404
+
+@app.route('/search/<query>')
+def search(query):
+    query_lower = query.lower()
+    results = [p for p in products.values() if query_lower in p['name'].lower()]
+    if results:
+        return render_template('search.html', query=query, results=results)
+    else:
+        return "<h2>Product Not Found</h2>", 404
+
+
+
+@app.route('/search', methods=['GET', 'POST'])
+def search_form():
+    if request.method == 'POST':
+        query = request.form.get('query')
+        return redirect(url_for('search', query=query))
+    return render_template('search.html')
 
 if __name__ == '__main__':
     app.run(debug=True)
-
-
-# =============================================================================
-# URL PARAMETER TYPES:
-# =============================================================================
-#
-# <variable>         - String (default), accepts any text without slashes
-# <int:variable>     - Integer, accepts only positive integers
-# <float:variable>   - Float, accepts floating point numbers
-# <path:variable>    - String, but also accepts slashes
-# <uuid:variable>    - UUID strings
-#
-# =============================================================================
-
-# =============================================================================
-# EXERCISES:
-# =============================================================================
-#
-# Exercise 4.1: Create a product page
-#   - Add route /product/<int:product_id>
-#   - Create a products dictionary with id, name, price
-#   - Display product details or "Not Found" message
-#
-# Exercise 4.2: Category and product route
-#   - Add route /category/<category_name>/product/<int:product_id>
-#   - Display both the category and product information
-#
-# Exercise 4.3: Search route
-#   - Add route /search/<query>
-#   - Display "Search results for: [query]"
-#   - Bonus: Add a simple search form that redirects to this route
-#
-# =============================================================================

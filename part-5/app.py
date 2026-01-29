@@ -18,12 +18,12 @@ app = Flask(__name__)
 # =============================================================================
 
 PERSONAL_INFO = {
-    'name': 'Your Name',
+    'name': 'Siddhesh Pawar',
     'title': 'Web Developer',
     'bio': 'A passionate developer learning Flask and web development.',
-    'email': 'your.email@example.com',
-    'github': 'https://github.com/yourusername',
-    'linkedin': 'https://linkedin.com/in/yourusername',
+    'email': 'pawarsiddhesh205@gmail.com',
+    'github': 'https://github.com/Pawar1207',
+    'linkedin': 'https://www.linkedin.com/in/siddheshpawar205/',
 }
 
 SKILLS = [
@@ -55,6 +55,10 @@ def about():
     return render_template('about.html', info=PERSONAL_INFO, skills=SKILLS)
 
 
+@app.route('/blog')
+def blog():
+    return render_template('blog.html')
+    
 @app.route('/projects')
 def projects():
     return render_template('projects.html', info=PERSONAL_INFO, projects=PROJECTS)

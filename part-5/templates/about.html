@@ -33,10 +33,13 @@
     <div class="info-box" style="margin-top: 20px;">
         <strong>For Loop Magic:</strong>
         <p>The skills above are rendered using a Jinja2 for loop:</p>
+
         <code style="display: block; margin-top: 10px; background: #edf2f7; padding: 10px; border-radius: 5px;">
-            {&percnt; for skill in skills &percnt;}<br>
-            &nbsp;&nbsp;{{ skill.name }} - {{ skill.level }}&percnt;<br>
-            {&percnt; endfor &percnt;}
+{% raw %}
+{% for skill in skills %}
+  {{ skill.name }} - {{ skill.level }}%
+{% endfor %}
+{% endraw %}
         </code>
     </div>
 </div>

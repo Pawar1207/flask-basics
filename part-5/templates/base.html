@@ -5,13 +5,167 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}{{ info.name }}{% endblock %}</title>
 
-    <!-- Link to our CSS file in the static folder -->
+    <!-- Main CSS -->
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <!-- 🌙 DARK MODE + LAYOUT FIXES -->
+    <style>
+        /* =====================
+           GLOBAL TRANSITION
+           ===================== */
+        body {
+            transition: background 0.4s ease, color 0.4s ease;
+        }
+
+        /* =====================
+           DARK MODE BASE
+           ===================== */
+        body.dark {
+            background: linear-gradient(135deg, #020617, #020617);
+            color: #e5e7eb;
+        }
+
+        body.dark * {
+            opacity: 1 !important;
+        }
+
+        /* =====================
+           NAVBAR + FOOTER
+           ===================== */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 24px;
+            position: relative;
+            z-index: 100;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            list-style: none;
+        }
+
+        body.dark .navbar,
+        body.dark .footer {
+            background: #020617;
+        }
+
+        body.dark .navbar a {
+            color: #e5e7eb;
+        }
+
+        /* =====================
+           MAIN CONTENT / CARDS
+           ===================== */
+        body.dark .container,
+        body.dark .card,
+        body.dark section {
+            background: #0f172a;
+            color: #e5e7eb;
+        }
+
+        body.dark .card {
+            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+        }
+
+        /* =====================
+           HERO SECTION FIX
+           ===================== */
+        body.dark .hero,
+        body.dark .hero-card {
+            background: #020617 !important;
+            color: #e5e7eb !important;
+        }
+
+        body.dark .hero h1,
+        body.dark .hero h2,
+        body.dark .hero p {
+            color: #e5e7eb !important;
+        }
+
+        /* =====================
+           TEXT VISIBILITY
+           ===================== */
+        body.dark h1,
+        body.dark h2,
+        body.dark h3,
+        body.dark h4 {
+            color: #f8fafc !important;
+        }
+
+        body.dark p,
+        body.dark li,
+        body.dark span {
+            color: #cbd5f5 !important;
+        }
+
+        body.dark a {
+            color: #7dd3fc;
+        }
+
+        /* =====================
+           INFO / HIGHLIGHT BOX
+           ===================== */
+        body.dark .info-box {
+            background: #020617 !important;
+            color: #e5e7eb !important;
+            border-left: 4px solid #6366f1;
+        }
+
+        /* =====================
+           BUTTONS
+           ===================== */
+        body.dark .btn,
+        body.dark .btn-primary {
+            background: linear-gradient(to right, #6366f1, #8b5cf6) !important;
+            color: #ffffff !important;
+            border: none;
+        }
+
+        body.dark .btn-secondary {
+            background: #1e293b !important;
+            color: #e5e7eb !important;
+        }
+
+        /* =====================
+           DARK MODE TOGGLE
+           ===================== */
+        .theme-toggle {
+            position: fixed;
+            top: 70px;
+            right: 20px;
+            border: none;
+            padding: 10px 14px;
+            font-size: 18px;
+            border-radius: 50%;
+            cursor: pointer;
+            background: white;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            z-index: 999;
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.1);
+        }
+
+        body.dark .theme-toggle {
+            background: #1e293b;
+            color: white;
+        }
+    </style>
 
     {% block extra_css %}{% endblock %}
 </head>
+
 <body>
-    <!-- Navigation Bar -->
+
+    <!-- 🌙 DARK MODE BUTTON -->
+    <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
+
+    <!-- NAVBAR -->
     <nav class="navbar">
         <div class="nav-brand">
             <a href="{{ url_for('home') }}">{{ info.name }}</a>
@@ -21,17 +175,16 @@
             <li><a href="{{ url_for('about') }}" class="{% if request.endpoint == 'about' %}active{% endif %}">About</a></li>
             <li><a href="{{ url_for('projects') }}" class="{% if request.endpoint == 'projects' or request.endpoint == 'project_detail' %}active{% endif %}">Projects</a></li>
             <li><a href="{{ url_for('contact') }}" class="{% if request.endpoint == 'contact' %}active{% endif %}">Contact</a></li>
+            <li><a href="{{ url_for('blog') }}" class="{% if request.endpoint == 'blog' %}active{% endif %}">Blog</a></li>
         </ul>
     </nav>
 
-    <!-- Main Content Area -->
+    <!-- MAIN CONTENT -->
     <main class="container">
-        {% block content %}
-        <!-- Page content goes here -->
-        {% endblock %}
+        {% block content %}{% endblock %}
     </main>
 
-    <!-- Footer -->
+    <!-- FOOTER -->
     <footer class="footer">
         <p>&copy; 2024 {{ info.name }} | Built with Flask</p>
         <p class="footer-note">
@@ -39,34 +192,28 @@
         </p>
     </footer>
 
+    <!-- 🌙 DARK MODE JS (PERSISTENT) -->
+    <script>
+        const btn = document.querySelector(".theme-toggle");
+
+        function setTheme(isDark) {
+            document.body.classList.toggle("dark", isDark);
+            btn.textContent = isDark ? "☀️" : "🌙";
+            localStorage.setItem("theme", isDark ? "dark" : "light");
+        }
+
+        function toggleTheme() {
+            setTheme(!document.body.classList.contains("dark"));
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const savedTheme = localStorage.getItem("theme");
+            if (savedTheme === "dark") {
+                setTheme(true);
+            }
+        });
+    </script>
+
     {% block extra_js %}{% endblock %}
 </body>
 </html>
-
-{#
-=============================================================================
-TEMPLATE INHERITANCE EXPLAINED
-=============================================================================
-
-This is a BASE TEMPLATE. Other templates "extend" this one.
-
-Key Jinja2 blocks:
-- block title -> Page title
-- block content -> Main page content
-- block extra_css -> Additional CSS (optional)
-- block extra_js -> Additional JS (optional)
-
-Child templates use:
-extends "base.html"
-block content
-    <h1>My Page Content</h1>
-endblock
-
-Benefits:
-1. DRY (Don't Repeat Yourself) - navbar/footer defined once
-2. Consistent layout across all pages
-3. Easy to update site-wide elements
-4. Child templates only define what's different
-
-=============================================================================
-#}

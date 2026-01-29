@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Contact - My Flask Site</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+        }
+        nav a {
+            margin-right: 15px;
+            text-decoration: none;
+            color: #007bff;
+        }
+        nav a:hover {
+            text-decoration: underline;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+        }
+        button {
+            margin-top: 10px;
+            padding: 8px 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav>
+            <a href="/">Home</a>
+            <a href="/about">About</a>
+            <a href="/contact">Contact</a>
+        </nav>
+
+        <h1>Contact Us</h1>
+        <p>This is a simple contact page.</p>
+
+        <form>
+            <label>Name:</label>
+            <input type="text" placeholder="Your name">
+
+            <label>Email:</label>
+            <input type="email" placeholder="Your email">
+
+            <label>Message:</label>
+            <textarea rows="4" placeholder="Your message"></textarea>
+
+            <button type="submit">Send</button>
+        </form>
+    </div>
+</body>
+</html>

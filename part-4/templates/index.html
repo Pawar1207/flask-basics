@@ -83,6 +83,10 @@
             <a href="/">Home</a>
             <a href="/about/">About</a>
             <a href="/links">URL Builder</a>
+            <a href="{{ url_for('show_products', product_id=1) }}">Product</a>
+            <a href="{{ url_for('category_product', category_name='electronics', product_id=1) }}">Category Product</a>
+            <a href="{{ url_for('search_form') }}">Search</a>
+
         </nav>
 
         <h1>Dynamic Routes in Flask</h1>

@@ -1,0 +1,118 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 900px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #f5f7fa;
+        }
+
+        h1, h2, h3 {
+            color: #2d3748;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            margin-bottom: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+        }
+
+        .info-box {
+            background: #edf2f7;
+            padding: 15px;
+            margin-top: 15px;
+            border-left: 5px solid #3182ce;
+            border-radius: 5px;
+        }
+
+        nav {
+            margin-bottom: 30px;
+        }
+
+        nav a {
+            margin-right: 15px;
+            text-decoration: none;
+            color: #3182ce;
+            font-weight: bold;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+
+ <nav class="navbar">
+        <div class="nav-brand">
+            <a href="{{ url_for('home') }}"></a>
+        </div>
+        <ul class="nav-links">
+            <li><a href="{{ url_for('home') }}" class="{% if request.endpoint == 'home' %}active{% endif %}">Home</a></li>
+            <li><a href="{{ url_for('about') }}" class="{% if request.endpoint == 'about' %}active{% endif %}">About</a></li>
+            <li><a href="{{ url_for('projects') }}" class="{% if request.endpoint == 'projects' or request.endpoint == 'project_detail' %}active{% endif %}">Projects</a></li>
+            <li><a href="{{ url_for('contact') }}" class="{% if request.endpoint == 'contact' %}active{% endif %}">Contact</a></li>
+            <li><a href="{{ url_for('blog') }}" class="{% if request.endpoint == 'blog' %}active{% endif %}">Blog</a></li>
+        </ul>
+    </nav>
+    <!-- Blog Header -->
+    <div class="card">
+        <h1>My Blog</h1>
+        <p style="font-size: 18px;">
+            Welcome to my blog! Here I share my thoughts, learnings, and experiences.
+        </p>
+
+        <div class="info-box">
+            <strong>Dynamic Content:</strong>
+            <p>This page displays blog posts using Jinja2.</p>
+        </div>
+    </div>
+
+    <!-- Blog Posts -->
+    {% for post in posts %}
+    <div class="card">
+        <h3>{{ post.title }}</h3>
+        <p style="color: gray; font-size: 14px;">
+            {{ post.date }} · {{ post.author }}
+        </p>
+
+        <p style="margin-top: 15px; font-size: 16px;">
+            {{ post.content }}
+        </p>
+
+        <div class="info-box">
+            <strong>Category:</strong> {{ post.category }}
+        </div>
+    </div>
+    {% endfor %}
+
+    <!-- Explanation -->
+    <div class="card">
+        <h2>How This Works</h2>
+        <p>The blog posts above are rendered using a Jinja2 for loop:</p>
+
+        <code style="display: block; background: #edf2f7; padding: 10px; border-radius: 5px;">
+{% raw %}
+{% for post in posts %}
+  {{ post.title }}
+  {{ post.content }}
+{% endfor %}
+{% endraw %}
+        </code>
+    </div>
+
+</body>
+</html>

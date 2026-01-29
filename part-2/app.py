@@ -11,6 +11,10 @@ from flask import Flask, render_template  # render_template lets us serve HTML f
 
 app = Flask(__name__)
 
+@app.route('/contact')
+def contact():
+    return render_template('contact.html')
+
 
 @app.route('/')
 def home():

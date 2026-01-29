@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Category Product</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f8;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 450px;
+            margin: 80px auto;
+            background: #ffffff;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .category {
+            text-align: center;
+            font-size: 18px;
+            color: #777;
+            margin-bottom: 20px;
+        }
+
+        .detail {
+            font-size: 18px;
+            margin: 12px 0;
+            color: #555;
+        }
+
+        .price {
+            font-size: 22px;
+            font-weight: bold;
+            color: #27ae60;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>{{ product.name }}</h1>
+    <p class="category">Category: {{ category }}</p>
+
+    <p class="detail"><b>ID:</b> {{ product.id }}</p>
+    <p class="detail price"><b>Price:</b> ₹{{ product.price }}</p>
+</div>
+
+</body>
+</html>
